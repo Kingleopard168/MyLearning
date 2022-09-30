@@ -1,7 +1,10 @@
+from calendar import month
 from http.client import HTTPResponse
 import imp
+from urllib import response
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.urls import reverse
 import challenges
 
 monthly_challenges = {
@@ -20,6 +23,19 @@ monthly_challenges = {
 }
 # Create your views here.
 
+def index(request):
+    list_items = ""
+    month = list(monthly_challenges.keys())
+
+    for month in month:
+        capitalized_month = month.capitalize()
+        month_path = reverse("monthly_challenges", args=[month])
+        list_items += f"<li><a href=\"{month_path}\">{capitalized_month}</a></li>"
+
+    response_data = f"<ul>{list_items}</ul>"
+    return HttpResponse(response_data)
+    
+
 def january(request):
     return HttpResponse("Eat no meat for the entire month")
 
@@ -33,14 +49,18 @@ def monthly_challenge_by_number(request, month):
         return HttpResponseNotFound("Invalid month")
 
     redirect_month = months[month - 1]
-    return HttpResponseRedirect("/challenges/"+ redirect_month)
+    redirect_path = reverse("monthly_challenges", args=[redirect_month]) #challenges/january
+    return HttpResponseRedirect(redirect_path)
+#    return HttpResponseRedirect("/challenge/"+ redirect_month)
 #    return HttpResponse(month)
     
 def monthly_challenge(request, month):
     try:
         challenges_text = monthly_challenges[month]
+        response_data =f"<h1>{challenges_text}</h1>"
+        return HttpResponse(response_data)
     except:
-        return HttpResponseNotFound("this month is not supported")
+        return HttpResponseNotFound("<h1>this month is not supported</h1>")
 
 #    if month == "january":
 #       challenges_text = "Eat no meat for the entire month"
