@@ -62,7 +62,7 @@ def monthly_challenge(request, month):
 #shot cut code
         return render(request,"challenges/challenge.html", {
             "text" : challenges_text,
-            "month_name": month.capitalize()
+            "month_name": month
             })    
 #        response_data = render_to_string("challenges/challenge.html")
 #        response_data =f"<h1>{challenges_text}</h1>"
