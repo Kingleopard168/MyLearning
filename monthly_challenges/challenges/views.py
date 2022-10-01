@@ -60,7 +60,10 @@ def monthly_challenge(request, month):
     try:
         challenges_text = monthly_challenges[month]
 #shot cut code
-        return render(request,"challenges/challenge.html")    
+        return render(request,"challenges/challenge.html", {
+            "text" : challenges_text,
+            "month_name": month.capitalize()
+            })    
 #        response_data = render_to_string("challenges/challenge.html")
 #        response_data =f"<h1>{challenges_text}</h1>"
 #        return HttpResponse(response_data)
