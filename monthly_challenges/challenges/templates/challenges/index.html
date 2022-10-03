@@ -5,6 +5,7 @@
     {% endblock %}
 
     {% block content %}
+        {% include "./includes/header.html" %}
    <ul>
         {% for month in months %}
             <li><a href="{% url "monthly_challenges" month %}">{{ month|title }}</a></li>
